@@ -1,0 +1,39 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+recipiet-Gpay
+{% endblock title %}
+
+{% block content %}
+<audio id="notificationSound" src="{% static 'audio/Google Pay - Message Tone ! Notification.mp3' %}" preload="auto" autoplay></audio>
+<div class="card ms-auto mt-5" style="width: 18rem; position: relative;">
+    <div class="ms-auto"><img src="{% static 'img/123.gif'%}" alt="" style="width: 170; height: 170px; overflow: hidden;;margin-left:0px;"></div>
+    <div class="mt-1" style="margin-left: 25px;">
+        <h5 style="font-family: bungee;">Payment Completed</h5>
+    </div>
+
+    <div class="ms-auto">
+        <h5 style="font-family:poppins" class="mb-3 mt-3">From : <strong>{{request.user.username}}</strong></h5>
+        <h5 style="font-family: poppins;" class="mb-3">T0    : <strong>{{rec}}</strong></h5>
+        <h5 style="font-family: poppins;"class="mb-3">Amount : ₹.<strong>{{amount}}</strong></h5> 
+        <a href="\" class="btn btn-outline-success mb-5 mt-4" style="margin-left: 40px;">Home</a>       
+    </div>
+      
+
+  </div>
+
+
+
+{% endblock content %}
+
+
+
+  
+
+
+
+
+
+
+

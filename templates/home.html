@@ -1,0 +1,267 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+
+{% block title %}
+Gpay-Online payment gateway
+{% endblock title %}
+
+{% block content %}
+
+<style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    
+    /* Reseting */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+        background: #ecf0f3;
+    }
+    
+    .wrapper {
+
+        margin: 80px auto;
+        padding: 40px 30px 30px 30px;
+        background-color: #ecf0f3;
+        border-radius: 15px;
+        box-shadow: 13px 13px 20px #7f7f7f, -13px -13px 20px #949393;
+    }
+    
+    .logo {
+        width: 80px;
+        margin: auto;
+    }
+    
+    .logo img {
+        width: 100%;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0px 0px 3px #5f5f5f,
+            0px 0px 0px 5px #ecf0f3,
+            8px 8px 15px #a7aaa7,
+            -8px -8px 15px #fff;
+    }
+    
+    .wrapper .name {
+        font-weight: 600;
+        font-size: 1.4rem;
+        letter-spacing: 1.3px;
+        padding-left: 10px;
+        color: #555;
+    }
+    
+    .wrapper .form-field input {
+        width: 100%;
+        display: block;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 1.2rem;
+        color: #666;
+        padding: 10px 15px 10px 10px;
+        /* border: 1px solid red; */
+    }
+    
+    .wrapper .form-field {
+        padding-left: 10px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+    }
+    
+    .wrapper .form-field .fas {
+        color: #555;
+    }
+    
+    .wrapper .btn {
+        box-shadow: none;
+        width: 100%;
+        height: 40px;
+        background-color: #03A9F4;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+            -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    
+    .wrapper .btn:hover {
+        background-color: #039BE5;
+    }
+    
+    .wrapper a {
+        text-decoration: none;
+        font-size: 0.8rem;
+        color: #03A9F4;
+    }
+    
+    .wrapper a:hover {
+        color: #039BE5;
+    }
+    
+    @media(max-width: 380px) {
+        .wrapper {
+            margin: 30px 20px;
+            padding: 40px 15px 15px 15px;
+        }
+    }
+    </style>
+    
+    
+    {% include 'inc/message.html' %}
+
+
+
+    {% if request.user.is_authenticated %}
+<div class="container-fluid d-flex"> 
+    <div class="wrapper w-10 mr-3 col-3">
+        <div class="text-center mt-4 name" style="font-family: poppins;">
+            Account Settings
+        </div>
+        <div class="text-center mt-4 row ">
+            {% if user_wallet.phonenumber != '' %}
+            <a class="btn btn-primary mt-3 mb-4" href="{% url 'phonechange' %}" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><strong>change phonenumber</strong></a>
+            {% else %}
+            <a class="btn btn-primary mt-3 mb-4" href="{% url 'phonechange' %}" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><strong>Set phonenumber</strong></a>
+            {% endif %}
+            {% if user_wallet.pin == '' %}
+            <a class="btn btn-primary mt-3 mb-4" href="{% url 'pin' %}"><strong>set pin</strong></a>
+            {% else %}
+            <a class="btn btn-primary mt-3 mb-4" href="{% url 'pin' %}"><strong>change Pin </strong></a>
+            {% endif %}
+            
+            <a class="btn btn-primary mt-3 mb-4 " href="{% url 'passchange' %}"><strong>change Password </strong></a>
+        </div>
+            
+        
+   </div>
+    <div class="wrapper w-25">
+        <div class="logo">
+            <img src="https://logowik.com/content/uploads/images/google-play-or-tez.jpg" alt="">
+        </div>
+        <div class="text-center mt-4 name" style="font-family: bungee;">
+            Google Pay
+        </div>
+
+        <div class="text-center fs-6 mt-3">
+            <div><h1 style="font-family: bungee;">{{ request.user.username }}</h1></div>
+            
+
+            <div><h1 style="font-family: poppins;font-size: small;">{{ user_wallet.account_number }}</h1></div>
+            
+            
+            <p>Account Balance</p>
+            <div><h1 style="font-family: poppins;">${{ user_wallet.account_balance }}</h1></div>
+
+            <a class="btn btn-primary mt-3 mb-4" href="{% url 'verify' %}"><strong>PAY</strong></a>
+
+            
+        </div>
+    </div>
+    <!-- transaction-->
+    <div class="wrapper w-45">
+
+        <div class="text-center mt-4 name" style="font-family: bungee;">
+            Transaction history
+        </div>
+
+        <div class="" style="max-height: 400px; overflow-y:scroll; ;">
+
+            
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th>Sender</th>
+                        <th>Recipient</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Transaction Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in all_transactions %}
+                        <tr>
+                            <td>{{ transaction.sender.user.username }}</td>
+                            <td>{{ transaction.recipient.user.username }}</td>
+                            <td>
+                                {% if transaction.sender.user.username == request.user.username%}
+                                    <h5 style="color: red;">{{ transaction.amount }}</h5>
+                                {% else %}
+                                    <h5 style="color: green;">{{ transaction.amount }}</h5>
+                                {% endif %}
+                            </td>
+                            <td>{{ transaction.timestamp }}</td>
+                            <td>
+                                {% if transaction.sender.user.username == request.user.username%}
+                                    <h5 style="color: red;">sent</h5>
+                                {% else %}
+                                    <h5 style="color: green;">received</h5>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>     
+    {% else %}
+    <div class="wrapper w-75 " >
+        <div class="logo">
+            <img src="https://logowik.com/content/uploads/images/google-play-or-tez.jpg" alt="">
+        </div>
+        <div class="text-center mt-4 name" style="font-family: bungee;">
+            Google Pay
+        </div>
+
+        <div class="text-center fs-6 mt-3">
+            <!-- view_wallet.html -->
+            <div><h1 style="font-family: bungee;">Welcome to Google</h1></div>    
+            <div><h1 style="font-family: poppins;">Money made simple, by Google.</h1></div>
+
+            <div class="mt-5 w-50 ms-auto ">
+                <a href="{% url 'login' %}" class="btn btn-warning">Login into Account</a>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container-fluid ms-auto">
+        <img class=" w-25  position-absolute " src="{% static 'img/4.webp'%}" alt=""; style="margin-left: 550px;">
+        <img class="ms-auto w-100  " src="{% static 'img/5.webp'%}" >
+        
+    </div>
+
+    
+    <div class="container-fluid text-center shadow-lg position-absolute " style="background-color: #ffffff; ">
+        
+        <img class="ms-auto w-100" src="{% static 'img/unnamed.webp'%}" alt="">
+        <h2 class="">Your money is protected</h2>
+        <h6 class="w-50 ms-auto mt-5 mb-5">Google Pay protects your money with a world class security system that helps detect fraud and prevents hacking. Safeguard your account with your screen lock, such as your fingerprint. If you need assistance, please visit 'Help and Feedback' in the app to connect with a support specialist</h6>
+        <div class="mb-5"></div>
+
+        <div>
+            <img class="ms-auto " src="{% static 'img/2.webp'%}" alt="" style="width: 170px; height: 160px;">
+            <h2>Shop, recharge, and more</h2>
+            <h6 class="w-50 ms-auto mt-5 mb-5">Recharge your mobile in a tap and finish with those monthly bills on Google Pay. Now you’re free to go shopping - online, or in a store. We’ve got you covered with easy access to past transactions, so you’re always in control. Use it wherever you see UPI or Google Pay.</h6>
+        </div>
+        <div >
+            <img class="ms-auto " src="{% static 'img/3.webp'%}" alt="" style="width: 170px; height: 160px;">
+            <h2>Rewards that are endlessly rewarding</h2>
+            <h6 class="w-50 ms-auto mt-5 ">Recharge your mobile in a tap and finish with those monthly bills on Google Pay. Now you’re free to go shopping - online, or in a store. We’ve got you covered with easy access to past transactions, so you’re always in control. Use it wherever you see UPI or Google Pay.</h6>
+        </div>
+    </div>
+
+    {% endif %}
+         
+{% endblock content %}
+<script  src="{% static 'js/script.js' %}"></script>
+
+
+
+
+

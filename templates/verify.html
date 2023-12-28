@@ -1,0 +1,44 @@
+{% extends 'layout/main.html' %}
+{% block title %}
+Gpay-Online payment gateway
+{% endblock title %}
+
+{% block content %}
+
+{% include 'inc/message.html' %}
+<div class="card w-50 ms-auto mt-5 shadow p-3 bg-body-secondary rounded">
+
+    
+    <div class="logo ms-auto mt-3">
+            
+        <div class="text-center mt-1 " style="font-family: bungee;">
+            <a class="navbar-brand " href="#"><img class="w-25" src="https://pay.google.com/about/business/static/images/logos/logo-gp3.svg" alt=""></a>
+            <h2 style="font-family:Belanosima;">Payment</h2>
+        </div>
+    
+    </div>
+
+    <div class="text-center mt-3 " style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+            Verify Account user 
+    </div>
+    <div class="text-center mt-3 " style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+             <h5 style="color: green; ">{{profile.user.username}}</h5>
+    </div>
+    
+    
+    <form method="post" action="{% url 'verify' %}" class="ms-auto mt-4">
+        {% csrf_token %}
+        {{ phone_form.as_p }}
+        <button class="btn btn-warning m-3" type="submit">Verify</button>
+
+        {% if user_verified %}
+        <a class="btn btn-success " href="{% url 'pay' profile.user.id %}" style="margin-left: 150px">Next</a>
+        {% endif %}
+   
+  
+    </div>
+
+
+</div>
+
+{% endblock content %}

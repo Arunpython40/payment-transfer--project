@@ -1,0 +1,40 @@
+{% extends 'layout/main.html' %}
+{% block title %}
+Gpay-Online payment gateway
+{% endblock title %}
+
+{% block content %}
+
+{% include 'inc/message.html' %}
+<div class="card w-50 ms-auto mt-5 shadow p-3 bg-body-secondary rounded">
+
+    
+    <div class="logo ms-auto mt-3">
+            
+        <div class="text-center mt-1 " style="font-family: bungee;">
+            <a class="navbar-brand " href="#"><img class="w-25" src="https://pay.google.com/about/business/static/images/logos/logo-gp3.svg" alt=""></a>
+            <h2 style="font-family:Belanosima;">Change Phonenumber </h2>
+        </div>
+    
+    </div>
+
+
+
+    
+    
+    <form method="post" action="{% url 'phonechange' %}" class="ms-auto mt-4">
+        {% csrf_token %}
+        {{ NumChangeForm.as_p }}
+        
+
+        
+        <button class="btn btn-outline-success" type="submit" style="margin-left: 100px;">change</button>
+        
+   
+  
+    </div>
+
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+    <div class="container-fluid">
+      <a class="navbar-brand " href="#"><img class="w-25" src="https://pay.google.com/about/business/static/images/logos/logo-gp3.svg" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link ml-3" aria-current="page" href="{% url 'home' %}">Home</a>
+          
+          <a class="nav-link ml-3" href="https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user">Get App</a>
+          
+          {% if request.user.is_authenticated %}
+             <button class="btn btn-success-outline ml-3">{{request.user.username}}</button>
+             <a class=" nav-link  " href="{% url 'logout' %}" >logout</a>
+          {% else %}
+          <a class="btn btn-outline-success ml-3 " href="{% url 'login' %}" style="margin-right: 20px;">Login</a>
+          <a class="btn btn-outline-success ml-3 " href="{% url 'register' %}" >Create A/C</a>
+          
+          {% endif %}
+         
+        </div>
+      </div>
+    </div>
+  </nav>

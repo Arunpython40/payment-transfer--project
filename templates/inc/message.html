@@ -1,0 +1,29 @@
+{% if messages %}
+{% for msg in messages %}
+    {% if msg.tags == 'error' %}
+    <div class="alert alert-danger alert-dismissible fade show w-25  mt-3 top-0 start-50 position-absolute" role="alert" >
+        {{msg}}
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show w-25  mt-3 top-0 start-50 position-absolute" role="alert">
+        {{msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+      {% endif %}    
+{% endfor %}
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-eMN49Cex6JR9pDH5bclF/sW83jUOwxXHCSO9JkP96z5LzO5uk+/b1p70vUo8q2L1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyFJQ8pYlZ+ZIcQPKCpLZLIF95A7S1NYY" crossorigin="anonymous"></script>
+<script>
+    // Auto-hide the alert after 3 seconds (adjust the delay as needed)
+    $(document).ready(function(){
+        setTimeout(function(){
+            $(".alert").alert('close');
+        }, 1000); // 3000 milliseconds = 3 seconds
+    });
+</script>
+

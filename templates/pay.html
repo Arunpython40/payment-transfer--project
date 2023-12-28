@@ -1,0 +1,53 @@
+{% extends 'layout/main.html' %}
+{% load static %}
+{% block title %}
+Gpay-Online payment gateway
+{% endblock title %}
+
+
+<body>
+
+{% block content %}
+{% include 'inc/message.html' %}
+<div class="card w-50 ms-auto mt-5 shadow p-3 mb-5 bg-body-secondary rounded">
+    <div class="logo ms-auto mt-3">
+        <div class="text-center mt-1 " style="font-family: bungee;">
+            <a class="navbar-brand " href="#"><img class="w-25" src="https://pay.google.com/about/business/static/images/logos/logo-gp3.svg" alt=""></a>
+            <h2 style="font-family:Belanosima;">Payment</h2>
+            
+        </div>
+        
+    </div>
+
+
+    
+
+  
+  {% if not pin_verified %}
+    <form method="post" action="{% url 'pay' recipient_profile.user.id %}" id="pin-form" {% if pin_verified %} style="display: none;"{% endif %} class="ms-auto">
+      <h1 style="font-family: poppins;">Enter 4 Digit TPIN</h1>
+      <div style="margin-left: 50px;" class="mt-4">{% csrf_token %}
+      {{ pin_form }} <br>
+      <button type="submit" name="pin_submit" class="btn btn-outline-success mt-4" style="margin-left: 70px;">Submit PIN</button>
+      </div>
+    </form>
+  {% else %}
+    <form method="post" action="{% url 'pay' recipient_profile.user.id %}" id="transfer-form" {% if not pin_verified %}style="display: none;"{% endif %} class="ms-auto">
+      <h1 style="font-family: poppins;">Enter Amount</h1>
+      {% csrf_token %}
+      {{ transfer_form }} <br>
+      <button  class="btn btn-outline-success mt-4 " name="transfer_submit"  style="margin-left: 130px;">PAY</button>
+      
+    </form>
+
+  {% endif %}
+  
+    {% if amount_entered %}
+    <!-- Automatically redirect to success page after 5 seconds -->
+       <meta http-equiv="refresh" content="5; url=success.html">
+    {% endif %}        
+
+
+{% endblock content %}
+
+

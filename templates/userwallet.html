@@ -1,0 +1,42 @@
+{% extends 'layout/main.html' %}
+{% block title %}
+login Gpay
+{% endblock title %}
+{% block content %}
+
+<section class="py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 " id="regform">
+                <form method="post" action="{% url 'userwallet' %}">
+                    <div class="mb-4 loginh2">
+                        <h2>Setup Account</h2>
+                    </div>
+                    {%csrf_token%}
+                    <div class="mb-4">
+                            <h2>{{usernames}}</h2>
+                        <label for="" class="form-label">phonenumber</label>
+                        {{form.phone_number}}
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label">4-Digit Pin</label>
+                        {{form.pin}}
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 20px;">Finish</button>
+
+                </form>
+                
+            </div>
+
+
+
+
+            
+
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

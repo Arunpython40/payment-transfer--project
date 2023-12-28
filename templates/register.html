@@ -1,0 +1,68 @@
+{% extends 'layout/main.html' %}
+{% block title %}
+login Gpay
+{% endblock title %}
+{% block content %}
+
+<section class="py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 " id="regform">
+                <form method="post" action="">
+                    <div class="mb-4 loginh2">
+                        <h2>Register</h2>
+                    </div>
+                    {%csrf_token%}
+                    <div class="mb-4">
+                        <label for="" class="form-label">username</label>
+                        {{form.username}}
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label">Email Address</label>
+                        {{form.email}}
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label">Password</label>
+                        {{form.password1}}
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="form-label">Confirm Password</label>
+                        {{form.password2}}
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary" style="margin-bottom: 20px;">Register</button>
+
+                </form>
+                <p class="my-2 newp">Already user ? <a href="{% url 'login' %}">Click Here</a></p>
+            </div>
+            <div class="col-6">
+                
+                {% if form.errors.username %}
+                <label for="" class="text-danger d-block" >{{ form.errors.username }}</label>
+                {% endif %}
+
+                
+                {% if form.errors.email %}
+                <label for="" class="text-danger d-block">{{ form.errors.email }}</label>
+                {% endif %}
+
+                
+                {% if form.errors.password1 %}
+                <label for="" class="text-danger d-block">{{ form.errors.password1 }}</label>
+                {% endif %}
+
+                
+                {% if form.errors.password2 %}
+                <label for="" class="text-danger d-block">{{ form.errors.password2 }}</label>
+                {% endif %}
+
+
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
